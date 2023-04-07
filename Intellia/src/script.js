@@ -146,17 +146,17 @@ const handleSubmit = async (e) => {
     // const data = new FormData(form)
 
     // user's chatstripe
-    chatContainer.innerHTML += chatStripe(false, data);
+    // chatContainer.innerHTML += chatStripe(false, data);  pp
 
     // to clear the textarea input
     form.reset();
 
     // bot's chatstripe
     const uniqueId = generateUniqueId();
-    chatContainer.innerHTML += chatStripe(true, " ", uniqueId);
+    // chatContainer.innerHTML += chatStripe(true, " ", uniqueId); pp
 
     // to focus scroll to the bottom
-    chatContainer.scrollTop = chatContainer.scrollHeight;
+    chatContainer.scrollTop = chatContainer.scrollHeight; // PP
 
     // specific message div
     const messageDiv = document.getElementById(uniqueId);
@@ -175,7 +175,7 @@ const handleSubmit = async (e) => {
     });
 
     clearInterval(loadInterval);
-    messageDiv.innerHTML = " ";
+    // messageDiv.innerHTML = " ";
 
     if (response.ok) {
       const data = await response.json();
@@ -199,7 +199,7 @@ const handleSubmit = async (e) => {
     } else {
       const err = await response.text();
 
-      messageDiv.innerHTML = "Something went wrong";
+      // messageDiv.innerHTML = "Something went wrong";
       alert(err);
     }
   }
