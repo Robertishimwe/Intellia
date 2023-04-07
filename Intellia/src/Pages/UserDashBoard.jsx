@@ -1,82 +1,67 @@
-import React, { useState } from "react";
-import bot from "./assets/bot.svg";
-import user from "./assets/user.svg";
-import "./style.css";
+import React, { useState, useEffect } from 'react';
 
-function UserDashBoard() {
-  const [transcript, setTranscript] = useState("");
-  const [chatStripes, setChatStripes] = useState([]);
+const SpeechRecognitionComponent = () => {
+  const [transcript, setTranscript] = useState('');
+  const [isListening, setIsListening] = useState(false);
 
-  const handleSpeechRecognition = () => {
-    const recognition = new webkitSpeechRecognition();
+  useEffect(() => {
+    let recognition = new window.webkitSpeechRecognition();
+
     recognition.continuous = true;
     recognition.interimResults = true;
-    recognition.lang = "en-US";
+    recognition.lang = 'en-US';
+
     recognition.onresult = (event) => {
-      const result = event.results[event.results.length - 1];
-      const transcript = result[0].transcript;
-      setTranscript(transcript);
+      let interimTranscript = '';
+      let finalTranscript = '';
+
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        let transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += transcript;
+        } else {
+          interimTranscript += transcript;
+        }
+      }
+
+      setTranscript(finalTranscript);
     };
-    recognition.start();
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    recognition.onerror = (event) => {
+      console.error(event.error);
+      setIsListening(false);
+    };
+
+    return () => {
+      recognition.stop();
+    };
+  }, []);
+
+  const handleStartListening = () => {
+    setIsListening(true);
+    window.webkitSpeechRecognition.start();
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const data = transcript.trim();
-    setTranscript("");
-
-    if (data) {
-      const stripes = [
-        ...chatStripes,
-        chatStripe(false, data),
-        chatStripe(true, "", generateUniqueId()),
-      ];
-      setChatStripes(stripes);
-    }
-  };
-
-  const generateUniqueId = () => {
-    const timestamp = Date.now();
-    const randomNumber = Math.random();
-    const hexadecimalString = randomNumber.toString(16);
-    return `id-${timestamp}-${hexadecimalString}`;
-  };
-
-  const chatStripe = (isAi, value, uniqueId) => {
-    return (
-      <div className={`wrapper ${isAi && "ai"}`}>
-        <div className="chat">
-          <div className="profile">
-            <img src={isAi ? bot : user} alt={isAi ? "bot" : "user"} />
-          </div>
-          <div className="message" id={uniqueId}>
-            {value}
-          </div>
-        </div>
-      </div>
-    );
+  const handleStopListening = () => {
+    setIsListening(false);
+    window.webkitSpeechRecognition.stop();
   };
 
   return (
-    <div id="app">
-      <div id="private_header">hello</div>
-      <div id="chat_container">{chatStripes}</div>
-      <form onSubmit={handleSubmit}>
-        <textarea
-          name="prompt"
-          rows="1"
-          cols="1"
-          placeholder="Ask ishimwe..."
-          value={transcript}
-          onChange={(e) => setTranscript(e.target.value)}
-        />
-        <button type="submit">
-          <img src="assets/send.svg" alt="send" />
-        </button>
-      </form>
-      <button onClick={handleSpeechRecognition}>Start recognition</button>
+    <div>
+      <button onClick={handleStartListening} disabled={isListening}>
+        Start Listening
+      </button>
+      <button onClick={handleStopListening} disabled={!isListening}>
+        Stop Listening
+      </button>
+      <p>Transcript: {transcript}</p>
     </div>
   );
-}
+};
 
-export default UserDashBoard;
+export default SpeechRecognitionComponent;
