@@ -1,65 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const UserDashboard = () => {
-  const [transcript, setTranscript] = useState('');
   const [isListening, setIsListening] = useState(false);
-
+  const [transcript, setTranscript] = useState("");
+  
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+  
   useEffect(() => {
-    let recognition = new window.webkitSpeechRecognition();
-
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    recognition.lang = 'en-US';
-
-    recognition.onresult = (event) => {
-      let interimTranscript = '';
-      let finalTranscript = '';
-
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        let transcript = event.results[i][0].transcript;
-        if (event.results[i].isFinal) {
-          finalTranscript += transcript;
-        } else {
-          interimTranscript += transcript;
-        }
-      }
-
-      setTranscript(finalTranscript);
-    };
-
-    recognition.onend = () => {
-      setIsListening(false);
-    };
-
-    recognition.onerror = (event) => {
-      console.error(event.error);
-      setIsListening(false);
-    };
-
-    return () => {
+    if (isListening) {
+      recognition.start();
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setTranscript(transcript);
+      };
+    } else {
       recognition.stop();
-    };
-  }, []);
+    }
+  }, [isListening]);
 
-  const handleStartListening = () => {
-    setIsListening(true);
-    window.webkitSpeechRecognition.start();
-  };
-
-  const handleStopListening = () => {
-    setIsListening(false);
-    window.webkitSpeechRecognition.stop();
+  const handleButtonClick = () => {
+    setIsListening(!isListening);
   };
 
   return (
     <div>
-      <button onClick={handleStartListening} disabled={isListening}>
-        Start Listening
+      <button onClick={handleButtonClick}>
+        {isListening ? "Stop" : "Start"} Listening
       </button>
-      <button onClick={handleStopListening} disabled={!isListening}>
-        Stop Listening
-      </button>
-      <p>Transcript: {transcript}</p>
+      <p>{transcript}</p>
     </div>
   );
 };
