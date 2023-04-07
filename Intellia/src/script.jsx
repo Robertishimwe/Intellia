@@ -146,7 +146,7 @@ const handleSubmit = async (e) => {
     // const data = new FormData(form)
 
     // user's chatstripe
-    // chatContainer.innerHTML += chatStripe(false, data);    ppp
+    chatContainer.innerHTML += chatStripe(false, data);
 
     // to clear the textarea input
     form.reset();
