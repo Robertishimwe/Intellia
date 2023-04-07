@@ -15,7 +15,13 @@ function UserDashBoard() {
   }
 
   return (
-    <div>UserDashBoard</div>
+
+    <>
+      <p>Microphone: {listening ? 'on' : 'off'}</p>
+      <button onClick={SpeechRecognition.startListening}>Start</button>
+      <p>{transcript}</p>
+    
+    </>
   )
 }
 
