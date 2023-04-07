@@ -1,36 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 const UserDashboard = () => {
-  const [isListening, setIsListening] = useState(false);
-  const [transcript, setTranscript] = useState("");
-  
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-  const recognition = new SpeechRecognition();
-  
-  useEffect(() => {
-    if (isListening) {
-      recognition.start();
-      recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        console.log(transcript)
-        setTranscript(transcript);
-      };
-    } else {
-      recognition.stop();
-    }
-  }, [isListening]);
+  const [transcript, setTranscript] = useState('');
+  const [listening, setListening] = useState(false);
+  const { finalTranscript, resetTranscript } = useSpeechRecognition();
 
-  const handleButtonClick = () => {
-    setIsListening(!isListening);
+  useEffect(() => {
+    if (finalTranscript) {
+      setTranscript(finalTranscript);
+      resetTranscript();
+    }
+  }, [finalTranscript, resetTranscript]);
+
+  const toggleListening = () => {
+    if (!listening) {
+      SpeechRecognition.startListening();
+    } else {
+      SpeechRecognition.stopListening();
+    }
+    setListening(!listening);
   };
 
   return (
     <div>
-      <button onClick={handleButtonClick}>
-        {isListening ? "Stop" : "Start"} Listening
+      <button onClick={toggleListening}>
+        {listening ? 'Stop listening' : 'Start listening'}
       </button>
-      <p>{transcript}</p>
+      <p>Transcript: {transcript}</p>
     </div>
   );
 };
