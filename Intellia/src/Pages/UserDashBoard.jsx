@@ -17,7 +17,7 @@ function UserDashBoard() {
 
       <form>
         <textarea name="prompt" rows="1" cols="1" placeholder="Ask intellia..."></textarea>
-        {/* <button type="submit"><img src="assets/send.svg" alt="send" /> */}
+        <button type="submit"><img src="assets/send.svg" alt="send" /></button>
       </form>
     </div>
     </>
