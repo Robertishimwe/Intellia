@@ -1,6 +1,5 @@
 import React from 'react'
 import "../styles/UserDashboard.css"
-import "../script"
 
 function UserDashBoard() {
   return (
