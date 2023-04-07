@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Route, Routes } from 'react-router-dom';
+
 import LoginPage from "./Pages/LoginPage";
 import UserDashBoard from "./Pages/UserDashBoard"
 import "./App.css";
@@ -6,10 +8,10 @@ import "./App.css";
 function App() {
 
   return (
-    <div className="App">
-      <LoginPage />
-      <UserDashBoard/>
-    </div>
+    <Routes>
+			<Route path='/' element={<UserDashBoard/>} />
+      <Route path='/login' element={<LoginPage />} />
+    </Routes>
   );
 }
 
