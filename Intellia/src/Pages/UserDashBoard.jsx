@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const SpeechRecognitionComponent = () => {
+const UserDashboard = () => {
   const [transcript, setTranscript] = useState('');
   const [isListening, setIsListening] = useState(false);
 
@@ -64,4 +64,4 @@ const SpeechRecognitionComponent = () => {
   );
 };
 
-export default SpeechRecognitionComponent;
+export default UserDashboard;
