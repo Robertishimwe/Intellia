@@ -13,6 +13,7 @@ const UserDashboard = () => {
       recognition.start();
       recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
+        console.log(transcript)
         setTranscript(transcript);
       };
     } else {
