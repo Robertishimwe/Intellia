@@ -10,6 +10,10 @@ function UserDashBoard() {
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
 
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
+
   return (
     <div>UserDashBoard</div>
   )
