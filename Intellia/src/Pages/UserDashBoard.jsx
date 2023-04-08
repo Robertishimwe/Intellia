@@ -53,14 +53,10 @@
 import React, {useState, useEffect} from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
-import UseTextToSpeech from '../utils/TextToSpeech';
 
 import api from '../utils/api';
 
 const UserDashBoard = () => {
-
-  const { isSpeaking, onEnd, Speak } = UseTextToSpeech();
-
   const {
     transcript,
     listening,
@@ -96,7 +92,8 @@ useEffect(() => {
     api.post(`/chat/test`,{"prompt":finalTranscript})
         .then((res) => {
           console.log(res.data)
-          Speak(res.data.bot);
+          const message = new SpeechSynthesisUtterance(re.data.bot);
+          window.speechSynthesis.speak(message);
           // resetTranscript()
          
         }).then(()=>{
@@ -117,7 +114,7 @@ useEffect(() => {
 
   return (
     <div>
-      {isSpeaking? "Speaking...":<p>Microphone: {listening ? 'on' : 'off'}</p>}
+      <p>Microphone: {listening ? 'on' : 'off'}</p>
       <button onClick={SpeechRecognition.startListening}>Start</button>
       <button onClick={SpeechRecognition.stopListening}>Stop</button>
       <button onClick={resetTranscript}>Reset</button>
