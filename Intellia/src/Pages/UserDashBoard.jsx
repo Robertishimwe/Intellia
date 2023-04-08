@@ -74,7 +74,7 @@ const [trigger, setTrigger] = useState(false)
 
 useEffect(() => {
  
-if(finalTranscript !="" && finalTranscript != null && finalTranscript != undefined){
+if(finalTranscript =="" && finalTranscript == null && finalTranscript == undefined){
   SpeechRecognition.startListening()
 }
 
