@@ -52,7 +52,6 @@
 
 import React, {useState, useEffect} from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import TextToSpeech from '../utils/TextToSpeech';
 
 import api from '../utils/api';
 
@@ -92,9 +91,7 @@ useEffect(() => {
     api.post(`/chat/test`,{"prompt":finalTranscript})
         .then((res) => {
           console.log(res.data)
-          const { isSpeaking, onEnd, speak } = TextToSpeech({ text: res.data });
-          speak()
-          // resetTranscript()
+          resetTranscript()
          
         }).then(()=>{
           SpeechRecognition.startListening()
