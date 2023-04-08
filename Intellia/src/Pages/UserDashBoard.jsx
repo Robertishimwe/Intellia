@@ -75,7 +75,7 @@ const [trigger, setTrigger] = useState(false)
 useEffect(() => {
  
 if(finalTranscript !="" && finalTranscript != null && finalTranscript != undefined){
-  setTrigger(Math.random() * (100000000000000 - 1) + 1)
+  SpeechRecognition.startListening()
 }
 
 }, [listening])
@@ -102,7 +102,7 @@ useEffect(() => {
   // return () => {
   //   second
   // }
-}, [trigger])
+}, [finalTranscript])
 
 
 
