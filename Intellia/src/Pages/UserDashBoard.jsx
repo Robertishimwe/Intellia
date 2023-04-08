@@ -53,7 +53,6 @@
 import React, {useState, useEffect} from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
-
 import api from '../utils/api';
 
 const UserDashBoard = () => {
@@ -91,10 +90,8 @@ useEffect(() => {
     console.log(finalTranscript)
     api.post(`/chat/test`,{"prompt":finalTranscript})
         .then((res) => {
-          console.log(res.data)
-          const message = new SpeechSynthesisUtterance(re.data.bot);
-          window.speechSynthesis.speak(message);
-          // resetTranscript()
+          console.log(res.data.bot)
+          resetTranscript()
          
         }).then(()=>{
           SpeechRecognition.startListening()
