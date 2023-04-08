@@ -69,6 +69,17 @@ const UserDashBoard = () => {
   }
 
 const [botResponse, setBotResponse] = useState('')
+const [trigger, setTrigger] = useState(false)
+
+
+useEffect(() => {
+ 
+if(finalTranscript !="" && finalTranscript != null && finalTranscript != undefined){
+  setTrigger(Math.random() * (100000000000000 - 1) + 1)
+}
+
+}, [listening])
+
 
 useEffect(() => {
 
@@ -91,7 +102,7 @@ useEffect(() => {
   // return () => {
   //   second
   // }
-}, [finalTranscript])
+}, [trigger])
 
 
 
