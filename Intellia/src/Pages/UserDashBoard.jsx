@@ -52,6 +52,7 @@
 
 import React, {useState, useEffect} from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import TextToSpeech from '../utils/TextToSpeech';
 
 import api from '../utils/api';
 
@@ -91,7 +92,9 @@ useEffect(() => {
     api.post(`/chat/test`,{"prompt":finalTranscript})
         .then((res) => {
           console.log(res.data)
-          resetTranscript()
+          const { isSpeaking, onEnd, speak } = TextToSpeech({ text: res.data });
+          speak()
+          // resetTranscript()
          
         }).then(()=>{
           SpeechRecognition.startListening()
@@ -111,7 +114,7 @@ useEffect(() => {
 
   return (
     <div>
-      <p>Microphone: {listening ? 'on' : 'off'}</p>
+      {isSpeaking? "Speaking, hope you are hearing me" :<p>Microphone: {listening ? 'on' : 'off'}</p>}
       <button onClick={SpeechRecognition.startListening}>Start</button>
       <button onClick={SpeechRecognition.stopListening}>Stop</button>
       <button onClick={resetTranscript}>Reset</button>
