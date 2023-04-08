@@ -96,7 +96,7 @@ const UserDashBoard = () => {
     if (finalTranscript === '' || finalTranscript == null || finalTranscript == undefined) {
       SpeechRecognition.startListening();
     }
-  }, [finalTranscript, browserSupportsSpeechRecognition]);
+  }, [listening]);
 
   useEffect(() => {
     if (finalTranscript) {
@@ -104,8 +104,9 @@ const UserDashBoard = () => {
         .post(`/chat/test`, { prompt: finalTranscript })
         .then((res) => {
           console.log(res.data.bot);
-          resetTranscript();
           setBotResponse(res.data.bot);
+        }).then(()=>{
+          resetTranscript();
         })
         .then(() => {
           SpeechRecognition.startListening();
@@ -116,7 +117,7 @@ const UserDashBoard = () => {
     } else {
       SpeechRecognition.startListening();
     }
-  }, [finalTranscript, resetTranscript]);
+  }, [finalTranscript]);
 
   useEffect(() => {
     if (botResponse) {
