@@ -53,6 +53,8 @@
 import React, {useState, useEffect} from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
+import api from '../utils/api';
+
 const UserDashBoard = () => {
   const {
     transcript,
@@ -73,6 +75,13 @@ useEffect(() => {
   if(finalTranscript){
     //axios
     console.log(finalTranscript)
+    api.post(`/chat/test`,{"prompt":finalTranscript})
+        .then((res) => {
+          console.log(res)
+         
+        }).catch((error)=>{
+          console.log(error)
+        })
   }else{
     return SpeechRecognition.startListening
   }
