@@ -5,7 +5,7 @@ import { thisUser } from '../redux/features/auth/loginSlice';
 
 function PrivateRoute() {
   const authenticated = useSelector(thisUser);
-  return authenticated?.user ? <Outlet /> : <Navigate to="/login" />;
+  return authenticated.user ? <Outlet /> : <Navigate to="/login" />;
 }
 
 export default PrivateRoute;

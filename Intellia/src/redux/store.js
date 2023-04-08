@@ -16,7 +16,7 @@ const persistConfig = {
   version: 1,
   storage,
   blacklist: [],
-  whitelist: ['login', 'isLogged', 'getProfile', 'searchQuery'],
+  whitelist: ['login', 'isLogged'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
