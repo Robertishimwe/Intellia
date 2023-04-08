@@ -42,6 +42,13 @@
 
 // export default UserDashBoard
 
+// transcript,
+//     interimTranscript,
+//     finalTranscript,
+//     resetTranscript,
+//     listening,
+//     browserSupportsSpeechRecognition,
+//     isMicrophoneAvailable
 
 import React from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
@@ -50,6 +57,7 @@ const UserDashBoard = () => {
   const {
     transcript,
     listening,
+    finalTranscript,
     resetTranscript,
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
@@ -65,6 +73,7 @@ const UserDashBoard = () => {
       <button onClick={SpeechRecognition.stopListening}>Stop</button>
       <button onClick={resetTranscript}>Reset</button>
       <p>{transcript}</p>
+      <p>final {finalTranscript}</p>
     </div>
   );
 };
