@@ -20,7 +20,7 @@
 //       <p>Microphone: {listening ? 'on' : 'off'}</p>
 //       <button onClick={SpeechRecognition.startListening}>Start</button>
 //       <p>{transcript}</p>
-    
+
 //     </>
 //   )
 // }
@@ -36,7 +36,7 @@
 //     <>
 //     <div>UserDashBoard</div>
 //     </>
-    
+
 //   )
 // }
 
@@ -50,7 +50,7 @@
 //     browserSupportsSpeechRecognition,
 //     isMicrophoneAvailable
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 const UserDashBoard = () => {
@@ -65,6 +65,24 @@ const UserDashBoard = () => {
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
   }
+
+const [botResponse, setBotResponse] = useState('')
+
+useEffect(() => {
+
+  if(finalTranscript){
+    //axios
+    console.log(finalTranscript)
+  }else{
+    return SpeechRecognition.startListening
+  }
+
+  // return () => {
+  //   second
+  // }
+}, [finalTranscript])
+
+
 
   return (
     <div>
