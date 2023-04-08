@@ -12,7 +12,7 @@ function App() {
     <Routes>
       <Route path='/' element={<UserDashBoard />} />
       <Route path='/login' element={<LoginPage />} />
-      <Route path='/auth/:token'/>
+      <Route path='/auth/:token' element={<LoginAuth/>}/>
     </Routes>
   );
 }
