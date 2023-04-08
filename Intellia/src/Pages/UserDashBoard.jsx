@@ -76,7 +76,8 @@ useEffect(() => {
   console.log(listening)
  
 if(finalTranscript =="" && finalTranscript == null && finalTranscript == undefined){
-  SpeechRecognition.startListening()
+  console.log("==>",listening)
+  SpeechRecognition.startListening
 }
 
 }, [listening])
@@ -89,6 +90,7 @@ useEffect(() => {
     console.log(finalTranscript)
     api.post(`/chat/test`,{"prompt":finalTranscript})
         .then((res) => {
+          console.log(res.data)
           resetTranscript()
          
         }).then(()=>{
