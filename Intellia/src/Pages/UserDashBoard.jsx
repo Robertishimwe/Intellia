@@ -114,7 +114,7 @@ useEffect(() => {
 
   return (
     <div>
-      {isSpeaking? "Speaking, hope you are hearing me" :<p>Microphone: {listening ? 'on' : 'off'}</p>}
+      <p>Microphone: {listening ? 'on' : 'off'}</p>
       <button onClick={SpeechRecognition.startListening}>Start</button>
       <button onClick={SpeechRecognition.stopListening}>Stop</button>
       <button onClick={resetTranscript}>Reset</button>
