@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 
 import LoginPage from "./Pages/LoginPage";
 import UserDashBoard from "./Pages/UserDashBoard"
-require("regenerator-runtime/path").path
 import "./App.css";
 
 function App() {
