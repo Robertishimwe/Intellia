@@ -77,8 +77,10 @@ useEffect(() => {
     console.log(finalTranscript)
     api.post(`/chat/test`,{"prompt":finalTranscript})
         .then((res) => {
-          SpeechRecognition.startListening()
+          resetTranscript()
          
+        }).then(()=>{
+          SpeechRecognition.startListening()
         }).catch((error)=>{
           console.log(error)
         })
