@@ -105,11 +105,6 @@ const UserDashBoard = () => {
         .then((res) => {
           console.log(res.data.bot);
           setBotResponse(res.data.bot);
-        }).then(()=>{
-          resetTranscript();
-        })
-        .then(() => {
-          SpeechRecognition.startListening();
         })
         .catch((error) => {
           console.log(error);
@@ -123,9 +118,33 @@ const UserDashBoard = () => {
     if (botResponse) {
       const synth = window.speechSynthesis;
       const utterance = new SpeechSynthesisUtterance(botResponse);
+      utterance.onstart = () => {
+        SpeechRecognition.stopListening
+        console.log('Speech started');
+        // Do something when speech starts
+      };
+      utterance.onend = () => {
+        resetTranscript()
+        SpeechRecognition.startListening()
+        console.log('Speech ended');
+        // Do something when speech ends
+      };
       synth.speak(utterance);
     }
   }, [botResponse]);
+  
+
+
+
+
+
+  // useEffect(() => {
+  //   if (botResponse) {
+  //     const synth = window.speechSynthesis;
+  //     const utterance = new SpeechSynthesisUtterance(botResponse);
+  //     synth.speak(utterance);
+  //   }
+  // }, [botResponse]);
 
   return (
     <div>
